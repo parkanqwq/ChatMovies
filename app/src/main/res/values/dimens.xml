@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_8_dp">8dp</dimen>
+    <dimen name="movie_name_margin_top">32sp</dimen>
+    <dimen name="_8dp">8dp</dimen>
+    <dimen name="temperature_value_text_size">40sp</dimen>
+    <dimen name="feels_like_text_size">30sp</dimen>
+    <dimen name="text_tittle_24_sp">24sp</dimen>
+    <dimen name="text_chat_18_sp">18sp</dimen>
+    <dimen name="text_16_sp">16sp</dimen>
+    <dimen name="text_12_sp">12sp</dimen>
+    <dimen name="imageTop">300dp</dimen>
+    <dimen name="dimen_100dp">100dp</dimen>
+    <dimen name="dimen_50dp">50dp</dimen>
+    <dimen name="dimen_30dp">30dp</dimen>
+    <dimen name="dimen_24_dp">24dp</dimen>
+    <dimen name="dimen_10dp">10dp</dimen>
+    <dimen name="dimen_0dp">0dp</dimen>
+    <integer name="Grad">1</integer>
+    <dimen name="fab_location_icon_size">45dp</dimen>
+</resources>
