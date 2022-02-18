@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">ChatMovies</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="search">search</string>
+    <string name="loading">Loading</string>
+    <string name="rating">rating:</string>
+    <string name="actors">Actors</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="new_movie">Новинки</string>
+    <string name="find">Поиск</string>
+    <string name="historu">История</string>
+    <string name="save_movies_db">Добавить в историю</string>
+    <string name="save">Добавление в избранное</string>
 </resources>

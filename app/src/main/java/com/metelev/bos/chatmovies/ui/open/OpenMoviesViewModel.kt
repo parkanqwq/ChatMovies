@@ -1,0 +1,40 @@
+package com.metelev.bos.chatmovies.ui.open
+
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.metelev.bos.chatmovies.domain.MoviesDbEntity
+import com.metelev.bos.chatmovies.repository.MoviesRepo
+import com.metelev.bos.chatmovies.repository.Repository
+import com.metelev.bos.chatmovies.rest.AppState
+import kotlinx.coroutines.*
+
+class OpenMoviesViewModel(private val repository: Repository)
+    : ViewModel(), LifecycleObserver, CoroutineScope by MainScope() {
+
+    private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData()
+    fun getLiveData() = liveDataToObserve
+
+    fun getMoviesFilm(id: Int) = getDataFromMovieSource(id)
+    fun getSaveMovie(moviesRepo: MoviesRepo, movie: MoviesDbEntity) = getDataSaveMovie(moviesRepo, movie)
+
+    private fun getDataFromMovieSource(id: Int) {
+        liveDataToObserve.value = AppState.Loading
+        launch {
+            val localStorageJob = async(Dispatchers.IO) {
+                repository.getMoviesActorServer(id)
+            }
+            liveDataToObserve.value = AppState.SuccessActors(localStorageJob.await())
+        }
+    }
+
+    private fun getDataSaveMovie(moviesRepo: MoviesRepo, movie: MoviesDbEntity) {
+        liveDataToObserve.value = AppState.Loading
+        launch {
+            val localStorageJob = async(Dispatchers.IO) {
+                moviesRepo.put(movie)
+            }
+            liveDataToObserve.value = AppState.Success(localStorageJob.toString())
+        }
+    }
+}
