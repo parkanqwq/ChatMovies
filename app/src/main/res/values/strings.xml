@@ -10,4 +10,6 @@
     <string name="new_movie">Новинки</string>
     <string name="find">Поиск</string>
     <string name="historu">История</string>
+    <string name="save_movies_db">Добавить в историю</string>
+    <string name="save">Добавление в избранное</string>
 </resources>
