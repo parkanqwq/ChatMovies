@@ -46,21 +46,21 @@ class SwitchFragment : BaseFragment(R.layout.fragment_switch) {
 
         when (position) {
             NEW_MOVIES -> {
-                setProfileTabHighlighted(layoutInflater)
+                setNewMovies(layoutInflater)
             }
             FIND_MOVIES -> {
-                setGamesTabHighlighted(layoutInflater)
+                setFindMovies(layoutInflater)
             }
             HISTORY_MOVIES -> {
-                setGeneralTabHighlighted(layoutInflater)
+                setHistoryMovies(layoutInflater)
             }
             else -> {
-                setProfileTabHighlighted(layoutInflater)
+                setNewMovies(layoutInflater)
             }
         }
     }
 
-    private fun setProfileTabHighlighted(layoutInflater: LayoutInflater) {
+    private fun setNewMovies(layoutInflater: LayoutInflater) {
         val profile =
             layoutInflater.inflate(R.layout.activity_api_custom_tab_new_films, null)
         profile.findViewById<AppCompatTextView>(R.id.tab_image_textview)
@@ -77,7 +77,7 @@ class SwitchFragment : BaseFragment(R.layout.fragment_switch) {
             layoutInflater.inflate(R.layout.activity_api_custom_tab_history, null)
     }
 
-    private fun setGamesTabHighlighted(layoutInflater: LayoutInflater) {
+    private fun setFindMovies(layoutInflater: LayoutInflater) {
         val games =
             layoutInflater.inflate(R.layout.activity_api_custom_tab_find, null)
         games.findViewById<AppCompatTextView>(R.id.tab_image_textview)
@@ -94,7 +94,7 @@ class SwitchFragment : BaseFragment(R.layout.fragment_switch) {
             layoutInflater.inflate(R.layout.activity_api_custom_tab_history, null)
     }
 
-    private fun setGeneralTabHighlighted(layoutInflater: LayoutInflater) {
+    private fun setHistoryMovies(layoutInflater: LayoutInflater) {
         val general =
             layoutInflater.inflate(R.layout.activity_api_custom_tab_history, null)
         general.findViewById<AppCompatTextView>(R.id.tab_image_textview)

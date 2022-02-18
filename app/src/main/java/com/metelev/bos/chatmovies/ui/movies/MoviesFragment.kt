@@ -47,14 +47,14 @@ class MoviesFragment : BaseFragment(R.layout.fragment_movies) {
             bundle.putParcelable(OpenMoviesFragment.BUNDLE_EXTRA, movieEntity)
             activity?.supportFragmentManager
                 ?.beginTransaction()
-                ?.replace(R.id.activity_main, OpenMoviesFragment.newInstance(bundle))
+                ?.add(R.id.activity_main, OpenMoviesFragment.newInstance(bundle))
                 ?.addToBackStack("")
                 ?.commit()
         }
     }
 
     private fun getAdapterMyFriends(movieEntity: ArrayList<MovieEntity>) {
-        adapterImages.setProfileInfo(movieEntity.asReversed())
+        adapterImages.setProfileInfo(movieEntity)
     }
 
     private val adapterImages = AdapterMovies(onObjectListener)
@@ -64,10 +64,10 @@ class MoviesFragment : BaseFragment(R.layout.fragment_movies) {
     }
 
     private fun initToolbar() {
-        val toolbar = activity?.findViewById<Toolbar>(R.id.tool_bar)
+        val toolbar = activity?.findViewById<Toolbar>(R.id.find_tool_bar)
         val appCompatActivity = activity as AppCompatActivity?
         appCompatActivity!!.setSupportActionBar(toolbar)
-        appCompatActivity.title = "Movies"
+        appCompatActivity.title = "Поиск фильма"
         setHasOptionsMenu(true)
     }
 
@@ -87,5 +87,10 @@ class MoviesFragment : BaseFragment(R.layout.fragment_movies) {
                 return true
             }
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        initToolbar()
     }
 }

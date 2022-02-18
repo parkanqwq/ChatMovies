@@ -34,6 +34,18 @@ class RepositoryImpl : Repository {
         return actorsList
     }
 
+    override fun getMoviesPopularServer(): ArrayList<MovieEntity> {
+        val dto = moviesApi.getMoviesPopularAsync(api_key, "ru").execute().body()
+        val moviesList = arrayListOf<MovieEntity>()
+
+        if (dto?.results != null)
+            for (result in dto.results) {
+                if (result.backdrop_path != null)
+                    moviesList.add(result)
+            }
+        return moviesList
+    }
+
     companion object {
         private const val api_key = "a7fe7b51456e94640008bbb9e3a50dd5"
     }

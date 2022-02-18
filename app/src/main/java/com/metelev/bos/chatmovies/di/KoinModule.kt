@@ -4,6 +4,7 @@ import com.metelev.bos.chatmovies.repository.Repository
 import com.metelev.bos.chatmovies.impl.RepositoryImpl
 import com.metelev.bos.chatmovies.rest.ApiUtils
 import com.metelev.bos.chatmovies.rest.MoviesApi
+import com.metelev.bos.chatmovies.ui.latest.NewMoviesViewModel
 import com.metelev.bos.chatmovies.ui.movies.MoviesViewModel
 import com.metelev.bos.chatmovies.ui.open.OpenMoviesViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -14,6 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 val viewModelModule = module {
     viewModel { MoviesViewModel(get()) }
     viewModel { OpenMoviesViewModel(get()) }
+    viewModel { NewMoviesViewModel(get()) }
     single<Repository> { RepositoryImpl() }
 }
 

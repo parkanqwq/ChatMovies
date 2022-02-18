@@ -21,4 +21,10 @@ interface MoviesApi {
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String
     ) : Call<ActorDTO>
+
+    @GET("3/movie/popular")
+    fun getMoviesPopularAsync(
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String
+    ) : Call<MoviesDTO>
 }
