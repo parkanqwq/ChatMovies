@@ -13,15 +13,15 @@ class OpenMoviesViewModel(private val repository: Repository)
     private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData()
     fun getLiveData() = liveDataToObserve
 
-    fun getMoviesFilm() = getDataFromMovieSource()
+    fun getMoviesFilm(id: Int) = getDataFromMovieSource(id)
 
-    private fun getDataFromMovieSource() {
+    private fun getDataFromMovieSource(id: Int) {
         liveDataToObserve.value = AppState.Loading
         launch {
             val localStorageJob = async(Dispatchers.IO) {
-               // repository.getMovieFromLocalStorage()
+                repository.getMoviesActorServer(id)
             }
-           // liveDataToObserve.value = AppState.Success(localStorageJob.await())
+            liveDataToObserve.value = AppState.SuccessActors(localStorageJob.await())
         }
     }
 }

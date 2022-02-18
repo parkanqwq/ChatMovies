@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
+    android:layout_height="240dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_view">
 
@@ -38,29 +38,27 @@
 
                 <TextView
                     android:id="@+id/nameMovie"
+                    style="@style/TextTittle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/loading"
+                    android:layout_marginBottom="@dimen/margin_8_dp"
                     android:textAlignment="center"
                     android:textColor="#000000"
                     android:textSize="@dimen/text_16_sp" />
 
-                <TextView
-                    android:id="@+id/starsMovie"
-                    android:layout_width="match_parent"
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_8_dp"
-                    android:text="@string/loading"
-                    android:textSize="@dimen/text_16_sp" />
+                    android:progressTint="@color/purple_500" />
 
                 <TextView
-                    android:id="@+id/country"
+                    android:id="@+id/release_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp"
-                    android:layout_marginLeft="@dimen/margin_8_dp"
-                    android:layout_marginRight="@dimen/margin_8_dp"
-                    android:layout_marginBottom="@dimen/margin_8_dp"
                     android:text="@string/loading"
                     android:textSize="@dimen/text_16_sp" />
 

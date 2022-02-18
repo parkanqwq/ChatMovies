@@ -1,5 +1,7 @@
 package com.metelev.bos.chatmovies.impl
 
+import android.util.Log
+import com.metelev.bos.chatmovies.domain.ActorEntity
 import com.metelev.bos.chatmovies.domain.MovieEntity
 import com.metelev.bos.chatmovies.repository.Repository
 import com.metelev.bos.chatmovies.rest.MoviesApi
@@ -10,7 +12,7 @@ class RepositoryImpl : Repository {
     private val moviesApi: MoviesApi by inject(MoviesApi::class.java)
 
     override fun getMoviesFromServer(query: String): ArrayList<MovieEntity> {
-        val dto = moviesApi.getMoviesAsync(api_key, false,query).execute().body()
+        val dto = moviesApi.getMoviesAsync(api_key, "ru",false,query).execute().body()
         val moviesList = arrayListOf<MovieEntity>()
 
         if (dto?.results != null)
@@ -19,6 +21,17 @@ class RepositoryImpl : Repository {
             moviesList.add(result)
         }
         return moviesList
+    }
+
+    override fun getMoviesActorServer(id: Int): ArrayList<ActorEntity> {
+        val dto = moviesApi.getMoviesOpenAsync(id, api_key).execute().body()
+        val actorsList = arrayListOf<ActorEntity>()
+
+        if (dto?.cast != null)
+            for (result in dto.cast) {
+                actorsList.add(result)
+            }
+        return actorsList
     }
 
     companion object {

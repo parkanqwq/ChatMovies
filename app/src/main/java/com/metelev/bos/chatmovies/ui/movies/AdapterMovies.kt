@@ -3,6 +3,7 @@ package com.metelev.bos.chatmovies.ui.movies
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RatingBar
 import androidx.recyclerview.widget.RecyclerView
 import com.metelev.bos.chatmovies.R
 import com.metelev.bos.chatmovies.databinding.ItemMoviesBinding
@@ -38,10 +39,10 @@ class AdapterMovies (
         private val binding = ItemMoviesBinding.bind(view)
         fun bind(moviesEntity: MovieEntity) = with(binding) {
             nameMovie.text = moviesEntity.original_title.toString()
-            starsMovie.text = rating + moviesEntity.vote_average.toString()
-            country.text = language + moviesEntity.original_language.toString()
+            ratingBar.rating = moviesEntity.vote_average?.toFloat()?.div(2) ?: rating
+            releaseDate.text = release + moviesEntity.release_date.toString()
             Picasso.get()
-                .load(patch + moviesEntity.backdrop_path)
+                .load(patch + moviesEntity.poster_path)
                 .into(imageMovie)
             root.setOnClickListener {
                 onItemViewClickListener.onItemViewClick(moviesEntity)
@@ -50,8 +51,8 @@ class AdapterMovies (
     }
 
     companion object {
-        private const val rating = "Rating: "
-        private const val language = "Language: "
+        private const val rating = 3f
+        private const val release = "Release: "
         private const val patch = "https://image.tmdb.org/t/p/original"
     }
 }

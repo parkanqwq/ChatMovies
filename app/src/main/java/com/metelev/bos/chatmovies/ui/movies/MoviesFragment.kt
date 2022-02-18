@@ -25,12 +25,11 @@ class MoviesFragment : BaseFragment(R.layout.fragment_movies) {
         initToolbar()
         recycler_view.adapter = adapterImages
         viewModel.getLiveData().observe(viewLifecycleOwner) { renderData(it) }
-        viewModel.getMoviesFilm("бэтмен")
     }
 
     private fun renderData(data: AppState) {
         when (data) {
-            is AppState.Success -> {
+            is AppState.SuccessMovies -> {
                 getAdapterMyFriends(data.data)
             }
             is AppState.Loading -> {
@@ -45,7 +44,7 @@ class MoviesFragment : BaseFragment(R.layout.fragment_movies) {
     private val onObjectListener = object : OnItemViewClickListener {
         override fun onItemViewClick(movieEntity: MovieEntity) {
             val bundle = Bundle()
-            bundle.putParcelable(OpenMoviesFragment.BUNDLE_EXTRA, null)
+            bundle.putParcelable(OpenMoviesFragment.BUNDLE_EXTRA, movieEntity)
             activity?.supportFragmentManager
                 ?.beginTransaction()
                 ?.replace(R.id.activity_main, OpenMoviesFragment.newInstance(bundle))
