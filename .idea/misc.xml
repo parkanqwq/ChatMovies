@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/bfmax/AndroidStudioProjects/ChatMovies/app/src/main/res/layout/activity_api_custom_tab_find.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/bfmax/AndroidStudioProjects/ChatMovies/app/src/main/res/layout/activity_api_custom_tab_games.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/bfmax/AndroidStudioProjects/ChatMovies/app/src/main/res/layout/activity_api_custom_tab_general.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/bfmax/AndroidStudioProjects/ChatMovies/app/src/main/res/layout/activity_api_custom_tab_new_films.xml" value="0.36666666666666664" />
@@ -16,6 +17,7 @@
         <entry key="..\:/Users/bfmax/AndroidStudioProjects/ChatMovies/app/src/main/res/layout/item_actor.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/bfmax/AndroidStudioProjects/ChatMovies/app/src/main/res/layout/item_movies.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/bfmax/AndroidStudioProjects/ChatMovies/app/src/main/res/layout/testim.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/bfmax/AndroidStudioProjects/ChatMovies/app/src/main/res/menu/menu_bottom_navigation_view.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/bfmax/AndroidStudioProjects/ChatMovies/app/src/main/res/menu/menu_movies.xml" value="0.36666666666666664" />
       </map>
     </option>

@@ -1,11 +1,7 @@
 package com.metelev.bos.chatmovies.rest
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.metelev.bos.chatmovies.domain.MoviesDbEntity
-import java.util.*
 
 @Dao
 interface MoviesDao {
@@ -15,7 +11,7 @@ interface MoviesDao {
     @Query("DELETE FROM movies")
     fun clear()
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun put(user: MoviesDbEntity)
 
     @Delete

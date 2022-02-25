@@ -21,7 +21,7 @@ class StoriesOfMoviesViewModel
         liveDataToObserve.value = AppState.Loading
         launch {
             val localStorageJob = async(Dispatchers.IO) {
-                moviesRepo.image
+                moviesRepo.movies()
             }
             liveDataToObserve.value = AppState.SuccessMoviesDb(localStorageJob.await())
         }

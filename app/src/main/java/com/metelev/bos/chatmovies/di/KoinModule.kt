@@ -31,7 +31,7 @@ val viewModelModule = module {
 
 val retrofitModule = module {
     val baseUrlMainPart = "https://api.themoviedb.org/"
-    factory<MoviesApi> {
+    single<MoviesApi> {
         Retrofit.Builder()
             .baseUrl(baseUrlMainPart)
             .addConverterFactory(GsonConverterFactory.create())

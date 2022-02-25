@@ -1,6 +1,7 @@
 package com.metelev.bos.chatmovies.ui.open
 
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,7 @@ import com.metelev.bos.chatmovies.repository.MoviesRepo
 import com.metelev.bos.chatmovies.rest.AppState
 import com.metelev.bos.chatmovies.ui.base.BaseFragment
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_open_movies.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.java.KoinJavaComponent.inject
@@ -24,14 +26,13 @@ class OpenMoviesFragment : BaseFragment(R.layout.fragment_open_movies) {
 
     override fun onResume() {
         super.onResume()
-
         initView()
     }
 
     private fun initView() {
         val movie = arguments?.getParcelable<MovieEntity>(BUNDLE_EXTRA)
         viewModel.getLiveData().observe(viewLifecycleOwner) { renderData(it) }
-        activity?.window?.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        viewModel.getButton(movie)
 
         recycler_view.adapter = adapterImages
 
@@ -46,7 +47,14 @@ class OpenMoviesFragment : BaseFragment(R.layout.fragment_open_movies) {
         initToolbar(movie)
 
         save_movies.setOnClickListener {
-            viewModel.getSaveMovie(moviesRepo, convertMovie(movie))
+            if (save_movies.text == getString(R.string.delete_movies_db)) {
+                viewModel.getDeleteMovieDb(convertMovie(movie))
+                save_movies.text = getString(R.string.save_movies_db)
+            } else {
+                viewModel.getSaveMovie(moviesRepo, convertMovie(movie))
+                save_movies.text = getString(R.string.delete_movies_db)
+            }
+
         }
     }
 
@@ -80,9 +88,11 @@ class OpenMoviesFragment : BaseFragment(R.layout.fragment_open_movies) {
     private fun renderData(data: AppState) {
         when (data) {
             is AppState.Success -> {
-                Toast.makeText(context, getString(R.string.save), Toast.LENGTH_SHORT).show()
+
             }
-            is AppState.SuccessMovies -> {
+            is AppState.HaveMovie -> {
+                if (data.data)
+                    save_movies.text = getString(R.string.delete_movies_db)
 
             }
             is AppState.SuccessActors -> {

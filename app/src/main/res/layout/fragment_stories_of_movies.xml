@@ -10,7 +10,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/history_tool_bar"
         android:elevation="@dimen/_8dp"
-        app:title="@string/historu"
+        app:title="@string/history"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"/>

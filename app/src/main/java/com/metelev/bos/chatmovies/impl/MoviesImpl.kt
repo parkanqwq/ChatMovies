@@ -5,8 +5,9 @@ import com.metelev.bos.chatmovies.repository.MoviesRepo
 import com.metelev.bos.chatmovies.rest.MoviesDao
 
 class MoviesImpl(private val moviesDao: MoviesDao) : MoviesRepo {
-    override val image: List<MoviesDbEntity> =
-        moviesDao.getMoviesDb()
+    override fun movies(): List<MoviesDbEntity>{
+        return  moviesDao.getMoviesDb()
+    }
 
     override fun put(movie: MoviesDbEntity) {
         moviesDao.put(movie)

@@ -9,7 +9,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="new_movie">Новинки</string>
     <string name="find">Поиск</string>
-    <string name="historu">История</string>
-    <string name="save_movies_db">Добавить в историю</string>
+    <string name="history">История</string>
+    <string name="save_movies_db">Добавить в избранное</string>
+    <string name="delete_movies_db">Удалить из избранного</string>
     <string name="save">Добавление в избранное</string>
+    <string name="delete_save">Удалено из избранного</string>
 </resources>

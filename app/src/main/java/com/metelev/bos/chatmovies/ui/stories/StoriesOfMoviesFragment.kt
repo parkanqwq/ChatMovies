@@ -21,6 +21,12 @@ class StoriesOfMoviesFragment : BaseFragment(R.layout.fragment_stories_of_movies
 
     private val viewModel: StoriesOfMoviesViewModel by viewModel()
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.getLiveData().observe(viewLifecycleOwner) { renderData(it) }
+        viewModel.getNewMovies()
+    }
+
     override fun onResume() {
         super.onResume()
 
@@ -66,7 +72,7 @@ class StoriesOfMoviesFragment : BaseFragment(R.layout.fragment_stories_of_movies
                 ?.beginTransaction()
                 ?.add(R.id.activity_main, OpenMoviesFragment.newInstance(bundle))
                 ?.addToBackStack("")
-                ?.commit()
+                ?.commitAllowingStateLoss()
         }
     }
 
