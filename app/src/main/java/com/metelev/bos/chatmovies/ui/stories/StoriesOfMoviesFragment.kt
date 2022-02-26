@@ -39,12 +39,14 @@ class StoriesOfMoviesFragment : BaseFragment(R.layout.fragment_stories_of_movies
         when (data) {
             is AppState.SuccessMoviesDb -> {
                 getAdapterMyFriends(data.data)
+                progress_circular.visibility = View.GONE
             }
             is AppState.Loading -> {
-                //showLoading()
+                progress_circular.visibility = View.VISIBLE
             }
             is AppState.Error -> {
-                //showError(data.error.message)
+
+                progress_circular.visibility = View.GONE
             }
         }
     }

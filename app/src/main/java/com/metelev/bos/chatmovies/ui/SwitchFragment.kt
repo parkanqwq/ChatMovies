@@ -1,6 +1,5 @@
 package com.metelev.bos.chatmovies.ui
 
-import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import com.metelev.bos.chatmovies.R
 import com.metelev.bos.chatmovies.ui.base.BaseFragment

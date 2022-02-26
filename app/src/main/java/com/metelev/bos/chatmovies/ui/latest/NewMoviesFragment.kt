@@ -3,6 +3,7 @@ package com.metelev.bos.chatmovies.ui.latest
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -32,12 +33,13 @@ class NewMoviesFragment : BaseFragment(R.layout.fragment_new_movies) {
         when (data) {
             is AppState.SuccessMovies -> {
                 getAdapterMyFriends(data.data)
+                progress_circular.visibility = View.GONE
             }
             is AppState.Loading -> {
-                //showLoading()
+                progress_circular.visibility = View.VISIBLE
             }
             is AppState.Error -> {
-                //showError(data.error.message)
+                progress_circular.visibility = View.GONE
             }
         }
     }

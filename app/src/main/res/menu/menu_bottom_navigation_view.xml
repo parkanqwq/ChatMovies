@@ -11,5 +11,5 @@
     <item
         android:id="@+id/bottom_view_settings"
         android:icon="@android:drawable/ic_menu_recent_history"
-        android:title="@string/history" />
+        android:title="@string/elected" />
 </menu>

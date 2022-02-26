@@ -1,11 +1,18 @@
 package com.metelev.bos.chatmovies.ui.movies
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.fragment.app.Fragment
 import com.metelev.bos.chatmovies.R
 import com.metelev.bos.chatmovies.domain.MovieEntity
 import com.metelev.bos.chatmovies.rest.AppState
@@ -31,12 +38,14 @@ class MoviesFragment : BaseFragment(R.layout.fragment_movies) {
         when (data) {
             is AppState.SuccessMovies -> {
                 getAdapterMyFriends(data.data)
+                progress_circular.visibility = View.GONE
             }
             is AppState.Loading -> {
-                //showLoading()
+                progress_circular.visibility = View.VISIBLE
             }
             is AppState.Error -> {
-                //showError(data.error.message)
+                Toast.makeText(context, (data.error), Toast.LENGTH_SHORT).show()
+                progress_circular.visibility = View.GONE
             }
         }
     }
@@ -79,6 +88,7 @@ class MoviesFragment : BaseFragment(R.layout.fragment_movies) {
         searchText.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 viewModel.getMoviesFilm(query)
+                hideKeyboard()
                 return true
             }
 
@@ -87,6 +97,14 @@ class MoviesFragment : BaseFragment(R.layout.fragment_movies) {
                 return true
             }
         })
+    }
+
+    fun Fragment.hideKeyboard() {
+        view?.let { activity?.hideKeyboard(it) }
+    }
+    fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     override fun onPause() {

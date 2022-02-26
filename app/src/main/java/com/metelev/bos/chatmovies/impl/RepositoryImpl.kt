@@ -1,6 +1,5 @@
 package com.metelev.bos.chatmovies.impl
 
-import android.util.Log
 import com.metelev.bos.chatmovies.domain.ActorEntity
 import com.metelev.bos.chatmovies.domain.MovieEntity
 import com.metelev.bos.chatmovies.repository.Repository
@@ -12,15 +11,24 @@ class RepositoryImpl : Repository {
     private val moviesApi: MoviesApi by inject(MoviesApi::class.java)
 
     override fun getMoviesFromServer(query: String): ArrayList<MovieEntity> {
-        val dto = moviesApi.getMoviesAsync(api_key, "ru",false,query).execute().body()
         val moviesList = arrayListOf<MovieEntity>()
-
-        if (dto?.results != null)
-        for (result in dto.results) {
-            if (result.backdrop_path != null)
-            moviesList.add(result)
+        return try {
+            val dto = moviesApi.getMoviesAsync(api_key, "ru",false,query).execute().body()
+            if (dto?.results != null)
+                for (result in dto.results) {
+                    if (result.backdrop_path != null)
+                        moviesList.add(result)
+                }
+            if (moviesList.size == 0){
+                moviesList.add(MovieEntity(null, "no movies",null, null,null, null,null, null,
+                    null, null))
+            }
+            moviesList
+        } catch (e: Exception) {
+            moviesList.add(MovieEntity(null, e.toString(),null, null,null, null,null, null,
+                null, null))
+            moviesList
         }
-        return moviesList
     }
 
     override fun getMoviesActorServer(id: Int): ArrayList<ActorEntity> {
@@ -42,6 +50,18 @@ class RepositoryImpl : Repository {
             for (result in dto.results) {
                 if (result.backdrop_path != null)
                     moviesList.add(result)
+            }
+        return moviesList
+    }
+
+    override fun getMoviesRecommendationsServer(id: Int): ArrayList<MovieEntity> {
+        val dto = moviesApi.getMoviesRecommendationsAsync(id, api_key, "ru").execute().body()
+        val moviesList = arrayListOf<MovieEntity>()
+
+        if (dto?.results != null)
+            for (result in dto.results) {
+                if (result.poster_path != null)
+                moviesList.add(result)
             }
         return moviesList
     }

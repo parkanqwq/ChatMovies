@@ -22,6 +22,17 @@ class OpenMoviesViewModel(private val repository: Repository)
     fun getSaveMovie(moviesRepo: MoviesRepo, movie: MoviesDbEntity) = getDataSaveMovie(moviesRepo, movie)
     fun getButton(movieDb: MovieEntity?) = getButtonChange(movieDb)
     fun getDeleteMovieDb(movie: MoviesDbEntity) = getDeleteMovie(movie)
+    fun getRecommendations(id: Int?) = getRecommendationsMovie(id)
+
+    private fun getRecommendationsMovie(id: Int?) {
+        liveDataToObserve.value = AppState.Loading
+        launch {
+            val localStorageJob = async(Dispatchers.IO) {
+                repository.getMoviesRecommendationsServer(id!!)
+            }
+            liveDataToObserve.value = AppState.SuccessMovies(localStorageJob.await())
+        }
+    }
 
     private fun getDeleteMovie(movie: MoviesDbEntity) {
         liveDataToObserve.value = AppState.Loading

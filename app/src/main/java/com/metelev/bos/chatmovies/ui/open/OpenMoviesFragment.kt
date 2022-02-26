@@ -1,10 +1,7 @@
 package com.metelev.bos.chatmovies.ui.open
 
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import android.util.Log
 import androidx.appcompat.widget.Toolbar
 import com.metelev.bos.chatmovies.R
 import com.metelev.bos.chatmovies.domain.ActorEntity
@@ -14,7 +11,6 @@ import com.metelev.bos.chatmovies.repository.MoviesRepo
 import com.metelev.bos.chatmovies.rest.AppState
 import com.metelev.bos.chatmovies.ui.base.BaseFragment
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_open_movies.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.java.KoinJavaComponent.inject
@@ -23,6 +19,7 @@ class OpenMoviesFragment : BaseFragment(R.layout.fragment_open_movies) {
 
     private val moviesRepo: MoviesRepo by inject(MoviesRepo::class.java)
     private val viewModel: OpenMoviesViewModel by viewModel()
+    private var buttonHistory = false
 
     override fun onResume() {
         super.onResume()
@@ -33,8 +30,10 @@ class OpenMoviesFragment : BaseFragment(R.layout.fragment_open_movies) {
         val movie = arguments?.getParcelable<MovieEntity>(BUNDLE_EXTRA)
         viewModel.getLiveData().observe(viewLifecycleOwner) { renderData(it) }
         viewModel.getButton(movie)
+        viewModel.getRecommendations(movie?.id)
 
         recycler_view.adapter = adapterImages
+        recommendations_recycler_view.adapter = adapterMoviesRec
 
         Picasso.get()
             .load(patch + movie?.backdrop_path)
@@ -47,14 +46,15 @@ class OpenMoviesFragment : BaseFragment(R.layout.fragment_open_movies) {
         initToolbar(movie)
 
         save_movies.setOnClickListener {
-            if (save_movies.text == getString(R.string.delete_movies_db)) {
+            buttonHistory = if (buttonHistory) {
                 viewModel.getDeleteMovieDb(convertMovie(movie))
-                save_movies.text = getString(R.string.save_movies_db)
+                save_movies.setBackgroundResource(R.drawable.ic_bookmark)
+                false
             } else {
                 viewModel.getSaveMovie(moviesRepo, convertMovie(movie))
-                save_movies.text = getString(R.string.delete_movies_db)
+                save_movies.setBackgroundResource(R.drawable.ic_bookmark_add)
+                true
             }
-
         }
     }
 
@@ -73,27 +73,51 @@ class OpenMoviesFragment : BaseFragment(R.layout.fragment_open_movies) {
         )
     }
 
-    private val adapterImages = AdapterActor()
-
     private fun initToolbar(movie: MovieEntity?) {
         val toolbar = activity?.findViewById(R.id.tool_bar) as Toolbar
         toolbar.title = movie?.original_title.toString()
         setHasOptionsMenu(true)
     }
 
-    private fun getAdapterMyFriends(movieEntity: ArrayList<ActorEntity>) {
-        adapterImages.setProfileInfo(movieEntity)
+    private val adapterImages = AdapterActor()
+    private fun getAdapterMyFriends(actorEntity: ArrayList<ActorEntity>) {
+        adapterImages.setProfileInfo(actorEntity)
+    }
+
+    private val onObjectListener = object : OnItemViewClickListener {
+        override fun onItemViewClick(movieEntity: MovieEntity) {
+            val bundle = Bundle()
+            bundle.putParcelable(OpenMoviesFragment.BUNDLE_EXTRA, movieEntity)
+            activity?.supportFragmentManager
+                ?.beginTransaction()
+                ?.add(R.id.activity_main, OpenMoviesFragment.newInstance(bundle))
+                ?.addToBackStack("")
+                ?.commit()
+        }
+    }
+
+    private fun getAdapterRec(movieEntity: ArrayList<MovieEntity>) {
+        adapterMoviesRec.setRecList(movieEntity)
+    }
+
+    private val adapterMoviesRec = AdapterMoviesRec(onObjectListener)
+
+    interface OnItemViewClickListener {
+        fun onItemViewClick(movieEntity: MovieEntity)
     }
 
     private fun renderData(data: AppState) {
         when (data) {
-            is AppState.Success -> {
-
+            is AppState.SuccessMovies -> {
+                Log.d("1234", data.data.toString())
+                getAdapterRec(data.data)
             }
             is AppState.HaveMovie -> {
+                buttonHistory = data.data
                 if (data.data)
-                    save_movies.text = getString(R.string.delete_movies_db)
-
+                    save_movies.setBackgroundResource(R.drawable.ic_bookmark_add)
+                else
+                    save_movies.setBackgroundResource(R.drawable.ic_bookmark)
             }
             is AppState.SuccessActors -> {
                 getAdapterMyFriends(data.data)

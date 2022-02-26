@@ -19,7 +19,11 @@ class MoviesViewModel(private val repository: Repository)
             val localStorageJob = async(Dispatchers.IO) {
                 repository.getMoviesFromServer(query)
             }
-            liveDataToObserve.value = AppState.SuccessMovies(localStorageJob.await())
+            if (localStorageJob.await()[0].id == null) {
+                liveDataToObserve.value = AppState.Error("error: " + localStorageJob.await()[0].poster_path)
+            } else {
+                liveDataToObserve.value = AppState.SuccessMovies(localStorageJob.await())
+            }
         }
     }
 }

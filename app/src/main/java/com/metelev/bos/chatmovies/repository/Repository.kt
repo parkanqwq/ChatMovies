@@ -7,4 +7,5 @@ interface Repository {
     fun getMoviesFromServer(query: String): ArrayList<MovieEntity>
     fun getMoviesActorServer(id: Int): ArrayList<ActorEntity>
     fun getMoviesPopularServer(): ArrayList<MovieEntity>
+    fun getMoviesRecommendationsServer(id: Int): ArrayList<MovieEntity>
 }

@@ -1,0 +1,53 @@
+package com.metelev.bos.chatmovies.ui.open
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.metelev.bos.chatmovies.R
+import com.metelev.bos.chatmovies.databinding.ItemActorBinding
+import com.metelev.bos.chatmovies.domain.MovieEntity
+import com.squareup.picasso.Picasso
+
+class AdapterMoviesRec  (
+    private var onItemViewClickListener: OpenMoviesFragment.OnItemViewClickListener
+) : RecyclerView.Adapter<AdapterMoviesRec.MainViewHolder>() {
+
+    private var moviesList: List<MovieEntity> = listOf()
+
+    fun setRecList(data: List<MovieEntity>) {
+        moviesList = data
+        notifyDataSetChanged()
+    }
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ) = MainViewHolder(
+        LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_actor, parent, false) as View
+    )
+
+    override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
+        holder.bind(moviesList[position])
+    }
+
+    override fun getItemCount(): Int = moviesList.size
+
+    inner class MainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val binding = ItemActorBinding.bind(view)
+        fun bind(moviesEntity: MovieEntity) = with(binding) {
+            actorTextView.text = moviesEntity.original_title.toString()
+            Picasso.get()
+                .load(patch + moviesEntity.poster_path)
+                .into(actorImageView)
+            root.setOnClickListener {
+                onItemViewClickListener.onItemViewClick(moviesEntity)
+            }
+        }
+    }
+
+    companion object {
+        private const val patch = "https://image.tmdb.org/t/p/original"
+    }
+}

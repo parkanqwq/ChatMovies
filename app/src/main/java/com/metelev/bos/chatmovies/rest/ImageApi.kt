@@ -27,4 +27,11 @@ interface MoviesApi {
         @Query("api_key") apiKey: String,
         @Query("language") language: String
     ) : Call<MoviesDTO>
+
+    @GET("3/movie/{movie_id}/recommendations")
+    fun getMoviesRecommendationsAsync(
+        @Path("movie_id") movie_id: Int,
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String
+    ) : Call<MoviesDTO>
 }

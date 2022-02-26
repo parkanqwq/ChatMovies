@@ -14,4 +14,6 @@
     <string name="delete_movies_db">Удалить из избранного</string>
     <string name="save">Добавление в избранное</string>
     <string name="delete_save">Удалено из избранного</string>
+    <string name="elected">Избранное</string>
+    <string name="recommendations">Recommendations</string>
 </resources>
